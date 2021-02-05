@@ -3,6 +3,7 @@
 	<head>
 		<title>All Blog Posts</title>
 		<script src="sources/jquery-3.5.1.min.js"></script>
+		<link rel = "stylesheet" href = "sources/bootstrapEdited.css" type = "text/css" />
 	</head>
 	<body>
 		<ul id="feed">
@@ -10,7 +11,7 @@
 		<script>
 			$.getJSON('https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',function(data){
 				for(var i=0;i<data.length;i++){
-					$('#feed').append('<li><a href="artical.html?index='+i+'"><img id="image" src="'+data[i].image+'" width="100" length="50"/> ,<strong> '+data[i].title+'</strong> , '+data[i].date+' , '+data[i].author+' , '+'</a></li>')
+					$('#feed').append('<li><a href="artical.html?index='+i+'"><img id="image" src="'+data[i].image+'" width="100" length="50"/> ,<strong> '+data[i].title+'</strong> , '+data[i].date+' , '+data[i].author+'</a></li>')
 				}
 			});
 		</script>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>A page that enables the admin to remove one post from the blog</title>
+		<script src="../sources/jquery-3.5.1.min.js"></script>
+		<script src="../sources/app.js"></script>
+		<link rel = "stylesheet" href = "../sources/bootstrapEdited.css" type = "text/css" />
+	</head>
+	<body>
+		<script>
+
+		$.getJSON('https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',function(data){
+			
+			var index=findGetParameter('index');
+			data.splice(index,1);
+			console.log(data);
+
+			$.ajax({
+				type: "PUT",
+				url:'https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',
+				contentType: "application/json",
+				data: JSON.stringify(data),
+				success: function(output, status, xhr) { 
+				console.log(xhr);
+				  console.log(xhr.getResponseHeader("Location"));
+				  window.location.href="index.html"
+				}
+			});
+		});
+		</script>
+	</body>
+</html>
