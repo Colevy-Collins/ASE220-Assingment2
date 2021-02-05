@@ -2,6 +2,8 @@
 <html>
 	<head>
 		<title>A Blog's Artical</title>
+		<script src="sources/jquery-3.5.1.min.js"></script>
+		<script src="sources/app.js"></script>
 		<style type="text/css">
 			h1{
 				text-align: center; 
@@ -15,12 +17,24 @@
 		</style>
 	</head>
 	<body>
-		<h1>title</h1>
-		<h2 class="inline">author</h2>
+		<h1 id="title">title</h1>
+		<h2 class="inline" id="author">author</h2>
 		<h3 class="inline" id="date"><em>date</em></h3>
 		<h3><a href="index.html">Back to feed</a><h3>
-		<h4>tags</h4>
-		<img src=""/>
-		<p>text</p>	
+		<h4 id="tags">tags</h4>
+		<img id="image" src="" width="300"/>
+		<p id="content">text</p>	
+		
+		<script>
+			$.getJSON('https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',function(data){
+				var index=findGetParameter('index');
+				$('#title').text(data[index].title);
+				$('#author').text(data[index].author);
+				$('#date').text(data[index].date);
+				$('#tags').text(data[index].tags);
+				$('#content').text(data[index].content);
+				$('#image').attr('src',data[index].image);
+			});
+		</script>
 	</body>
 </html>
