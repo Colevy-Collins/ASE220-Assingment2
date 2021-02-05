@@ -1,8 +1,75 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Edit A Blog Posts</title>
+		<title>Edit a Blog Posts</title>
+		<script src="../sources/jquery-3.5.1.min.js"></script>
+		<script src="../sources/app.js"></script>
 	</head>
 	<body>
+		<h3><a href="index.html">Back to feed</a><h3>
+		<h1>Edit a Post</h1>
+		<form id="edit">
+			<label>Title</label><br />
+			<input name="title" type="text" />
+			<br /><br />
+			<label>Author</label><br />
+			<input name="author" type="text" />
+			<br /><br />
+			<label>Date</label><br />
+			<input name="date" type="text" />
+			<br /><br />
+			<label>Image URL</label><br />
+			<input name="image" type="url" />
+			<br /><br />
+			<label>Tags</label><br />
+			<textarea name="tags" cols="50" ></textarea>
+			<br /><br />
+			<label>Content</label><br />
+			<textarea name="content" rows="20" cols="100"></textarea>
+			<br /><br />
+			<button type="submit">Submit</button>
+		</form>
+		<script>
+		$.getJSON('https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',function(data){
+			console.log(data);
+			var index=findGetParameter('index');
+			$('input[name="title"]').val(data[index].title);
+			$('textarea[name="tags"]').val(data[index].tags);
+			$('input[name="author"]').val(data[index].author);
+			$('textarea[name="content"]').val(data[index].content);
+			$('input[name="image"]').val(data[index].image);
+			$('input[name="date"]').val(data[index].date);
+		});
+		
+		$(document).on('submit','#edit',function(e){
+			e.preventDefault();
+			var item={
+				title:$('input[name="title"]').val(),
+				image:$('input[name="image"]').val(),
+				content:$('textarea[name="content"]').val(),
+				author:$('input[name="author"]').val(),
+				date:$('input[name="date"]').val(),
+				tags:$('textarea[name="tags"]').val(),
+			};
+			$.getJSON('https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',function(data){
+				
+				var index=findGetParameter('index');
+				data[index]=item;
+				
+				$.ajax({
+					type: "PUT",
+					url:'https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',
+					contentType: "application/json",
+					data: JSON.stringify(data),
+					success: function(output, status, xhr) { 
+					console.log(xhr);
+					  console.log(xhr.getResponseHeader("Location"));
+					  window.location.href="index.html"
+					}
+				});
+			});
+		}); 
+		</script>
+		
 	</body>
 </html>

@@ -2,7 +2,60 @@
 <html>
 	<head>
 		<title>Create a Blog Posts</title>
+		<script src="../sources/jquery-3.5.1.min.js"></script>
+		<script src="../sources/app.js"></script>
 	</head>
 	<body>
+		<h3><a href="index.html">Back to feed</a><h3>
+		<h1>Create a new Post</h1>
+		<form id="create">
+			<label>Title</label><br />
+			<input name="title" type="text" />
+			<br /><br />
+			<label>Author</label><br />
+			<input name="author" type="text" />
+			<br /><br />
+			<label>Date</label><br />
+			<input name="date" type="text" />
+			<br /><br />
+			<label>Image URL</label><br />
+			<input name="image" type="url" />
+			<br /><br />
+			<label>Tags</label><br />
+			<label>Tags</label><br />
+			<textarea name="tags" cols="50" ></textarea>
+			<br /><br />
+			<label>Content</label><br />
+			<textarea name="content" rows="20" cols="100"></textarea>
+			<br /><br />
+			<button type="submit">Submit</button>
+		</form>
+		<script>
+			$(document).on('submit','#create',function(e){
+				e.preventDefault();
+				$.getJSON('https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',function(data){
+					var item={
+						title:$('input[name="title"]').val(),
+						image:$('input[name="image"]').val(),
+						content:$('textarea[name="content"]').val(),
+						author:$('input[name="author"]').val(),
+						date:$('input[name="date"]').val(),
+						tags:$('textarea[name="tags"]').val(),
+					};
+					data.push(item);
+					$.ajax({
+						type: "PUT",
+						url:'https://jsonblob.com/api/jsonBlob/320e818f-6753-11eb-9c90-47434578f6ad',
+						contentType: "application/json",
+						data: JSON.stringify(data),
+						success: function(output, status, xhr) { 
+						  window.location.href="index.html"
+						}
+					});
+					
+				});
+			});
+		</script>
+		
 	</body>
 </html>
